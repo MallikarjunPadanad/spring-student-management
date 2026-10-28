@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Something went wrong')}"></head>
+<body>
+<div class="app">
+    <aside th:replace="~{fragments/layout :: sidebar('students')}"></aside>
+
+    <main class="main">
+        <section class="card empty">
+            <h2 th:text="${title} ?: 'Something went wrong'">Something went wrong</h2>
+            <p th:text="${message} ?: 'The page could not be shown. Go back to the student list and try again.'">Try again.</p>
+            <a class="btn btn-primary" th:href="@{/students}">Back to students</a>
+        </section>
+    </main>
+</div>
+</body>
+</html>
