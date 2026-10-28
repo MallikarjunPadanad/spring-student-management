@@ -3,40 +3,40 @@
 <head th:replace="~{fragments/layout :: head(${student.id == null} ? 'Add student' : 'Edit student')}"></head>
 <body>
 <div class="app">
-    <aside th:replace="~{fragments/layout :: sidebar(${student.id == null} ? 'new' : 'students')}"></aside>
+    <header th:replace="~{fragments/layout :: topbar(${student.id == null} ? 'new' : 'students')}"></header>
 
     <main class="main">
-        <header class="page-head">
-            <div>
-                <h1 th:text="${student.id == null} ? 'Add student' : 'Edit student'">Add student</h1>
-                <p class="summary" th:text="${student.id == null} ? 'Enter the details to add someone to the register.' : 'Change the details below, then save.'">Enter the details.</p>
-            </div>
-        </header>
+        <div class="page-head">
+            <h1 th:text="${student.id == null} ? 'Add student' : 'Edit student'">Add student</h1>
+            <p class="summary" th:text="${student.id == null} ? 'Enter the details to add someone to the register.' : 'Change the details below, then save.'">Enter the details.</p>
+        </div>
 
         <section class="card form-card">
             <form th:object="${student}"
                   th:action="${student.id == null} ? @{/students} : @{/students/{id}(id=${student.id})}"
                   method="post" novalidate>
 
-                <div class="field">
-                    <label for="name">Full name</label>
-                    <input id="name" type="text" th:field="*{name}" autocomplete="off" autofocus
-                           th:classappend="${#fields.hasErrors('name')} ? 'invalid'">
-                    <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</p>
-                </div>
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="name">Full name</label>
+                        <input id="name" type="text" th:field="*{name}" autocomplete="off" autofocus
+                               th:classappend="${#fields.hasErrors('name')} ? 'invalid'">
+                        <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</p>
+                    </div>
 
-                <div class="field">
-                    <label for="email">Email</label>
-                    <input id="email" type="email" th:field="*{email}" autocomplete="off"
-                           th:classappend="${#fields.hasErrors('email')} ? 'invalid'">
-                    <p class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</p>
-                </div>
+                    <div class="field">
+                        <label for="email">Email</label>
+                        <input id="email" type="email" th:field="*{email}" autocomplete="off"
+                               th:classappend="${#fields.hasErrors('email')} ? 'invalid'">
+                        <p class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</p>
+                    </div>
 
-                <div class="field field-short">
-                    <label for="age">Age</label>
-                    <input id="age" type="number" min="1" max="120" th:field="*{age}"
-                           th:classappend="${#fields.hasErrors('age')} ? 'invalid'">
-                    <p class="error" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Error</p>
+                    <div class="field">
+                        <label for="age">Age</label>
+                        <input id="age" type="number" min="1" max="120" th:field="*{age}"
+                               th:classappend="${#fields.hasErrors('age')} ? 'invalid'">
+                        <p class="error" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Error</p>
+                    </div>
                 </div>
 
                 <div class="form-actions">

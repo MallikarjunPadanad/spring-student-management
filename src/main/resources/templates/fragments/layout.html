@@ -5,6 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title th:text="${title} + ' - Student Register'">Student Register</title>
+    <script>
+        // Apply the saved text size before the page paints, so there is no flicker.
+        try {
+            var saved = parseFloat(localStorage.getItem('uiScale'));
+            if (saved) { document.documentElement.style.fontSize = saved + '%'; }
+        } catch (e) { /* storage unavailable, keep the default size */ }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -13,22 +20,25 @@
 </head>
 
 <body>
-<aside class="sidebar" th:fragment="sidebar(active)">
+<header class="topbar" th:fragment="topbar(active)">
     <a class="brand" th:href="@{/students}">
         <span class="brand-mark" aria-hidden="true">S</span>
-        <span>Student Register</span>
+        <span class="brand-name">Student Register</span>
     </a>
+
     <nav class="nav" aria-label="Main">
-        <a th:href="@{/students}" th:classappend="${active == 'students'} ? 'active'">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            All students
-        </a>
-        <a th:href="@{/students/new}" th:classappend="${active == 'new'} ? 'active'">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-            Add student
-        </a>
+        <a th:href="@{/students}" th:classappend="${active == 'students'} ? 'active'"
+           th:attr="aria-current=${active == 'students'} ? 'page'">Students</a>
+        <a th:href="@{/students/new}" th:classappend="${active == 'new'} ? 'active'"
+           th:attr="aria-current=${active == 'new'} ? 'page'">Add student</a>
     </nav>
-</aside>
+
+    <div class="text-size" role="group" aria-label="Text size">
+        <button type="button" class="size-btn" data-size="down" aria-label="Decrease text size" title="Smaller text">A&minus;</button>
+        <button type="button" class="size-value" data-size="reset" data-size-value aria-label="Reset text size" title="Reset to 100%">100%</button>
+        <button type="button" class="size-btn" data-size="up" aria-label="Increase text size" title="Larger text">A+</button>
+    </div>
+</header>
 
 <div th:fragment="flash">
     <p class="flash" role="status" th:if="${success}" th:text="${success}">Saved.</p>
